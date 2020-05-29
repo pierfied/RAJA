@@ -16,5 +16,6 @@ add_subdirectory(atomic-view)
 add_subdirectory(atomic-ref)
 
 add_subdirectory(reduce-sanity)
+add_subdirectory(reduce-multiple-segment)
 
 add_subdirectory(region)

@@ -15,6 +15,10 @@ using SequentialForallExecPols = camp::list< RAJA::seq_exec,
                                              RAJA::loop_exec,
                                              RAJA::simd_exec >;
 
+// Sequential execution policy types for reduction tests
+using SequentialForallReduceExecPols = camp::list< RAJA::seq_exec,
+                                                   RAJA::loop_exec >;
+
 #if defined(RAJA_ENABLE_OPENMP)
 using OpenMPForallExecPols = 
   camp::list< // This policy works for the tests, but commenting it out
