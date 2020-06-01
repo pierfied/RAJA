@@ -89,11 +89,11 @@ void ForallRangeReduceMinMultipleTest(RAJA::Index_type first,
   const int nloops_b = 4;
   for (int j = 0; j < nloops_b; ++j) {
 
-    double droll = dist(mt);
+    DATA_TYPE roll = static_cast<DATA_TYPE>( dist(mt) );
     RAJA::Index_type min_index = static_cast<RAJA::Index_type>(dist2(mt));
-    if ( test_array[min_index] > static_cast<DATA_TYPE>(droll) ) {
-      test_array[min_index] = static_cast<DATA_TYPE>(droll);
-      current_min = RAJA_MIN(current_min, static_cast<DATA_TYPE>(droll) );
+    if ( test_array[min_index] > roll ) {
+      test_array[min_index] = roll;
+      current_min = RAJA_MIN(current_min, roll );
     }
 
     working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
