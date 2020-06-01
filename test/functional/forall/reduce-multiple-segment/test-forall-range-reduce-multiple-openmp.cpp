@@ -5,22 +5,22 @@
 // SPDX-License-Identifier: (BSD-3-Clause)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-#include "tests/test-forall-segment-reduce-multiple.hpp"
+#include "tests/test-forall-range-reduce-multiple.hpp"
 
-#if defined(RAJA_ENABLE_TBB)
+#if defined(RAJA_ENABLE_OPENMP)
 
 #include "../test-forall-execpol.hpp"
 #include "../test-reducepol.hpp"
 
-// Cartesian product of types for TBB tests
-using TBBForallSegmentReduceMultipleTypes =
+// Cartesian product of types for OpenMP tests
+using OpenMPForallRangeReduceMultipleTypes =
   Test< camp::cartesian_product<ReduceMultipleDataTypeList, 
                                 HostResourceList, 
-                                TBBForallExecPols,
-                                TBBReducePols>>::Types;
+                                OpenMPForallExecPols,
+                                OpenMPReducePols>>::Types;
 
-INSTANTIATE_TYPED_TEST_SUITE_P(TBB,
-                               ForallSegmentReduceMultipleTest,
-                               TBBForallSegmentReduceMultipleTypes);
+INSTANTIATE_TYPED_TEST_SUITE_P(OpenMP,
+                               ForallRangeReduceMultipleTest,
+                               OpenMPForallRangeReduceMultipleTypes);
 
 #endif

@@ -5,16 +5,16 @@
 // SPDX-License-Identifier: (BSD-3-Clause)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-#ifndef __TEST_FORALL_SEGMENT_REDUCE_MULTIPLE_HPP__
-#define __TEST_FORALL_SEGMENT_REDUCE_MULTIPLE_HPP__
+#ifndef __TEST_FORALL_RANGE_REDUCE_MULTIPLE_HPP__
+#define __TEST_FORALL_RANGE_REDUCE_MULTIPLE_HPP__
 
 #include "gtest/gtest.h"
 
 #include "../../test-forall-utils.hpp"
 
-TYPED_TEST_SUITE_P(ForallSegmentReduceMultipleTest);
+TYPED_TEST_SUITE_P(ForallRangeReduceMultipleTest);
 template <typename T>
-class ForallSegmentReduceMultipleTest : public ::testing::Test
+class ForallRangeReduceMultipleTest : public ::testing::Test
 {
 };
 
@@ -26,11 +26,11 @@ using ReduceMultipleDataTypeList = camp::list<int,
                                               float,
                                               double>;
 
-#include "test-forall-segment-reducesum-multiple.hpp"
-#include "test-forall-segment-reducemin-multiple.hpp"
+#include "test-forall-range-reducesum-multiple.hpp"
+#include "test-forall-range-reducemin-multiple.hpp"
 
-REGISTER_TYPED_TEST_SUITE_P(ForallSegmentReduceMultipleTest,
-                            ReduceSumMultipleSegmentForall,
-                            ReduceMinMultipleSegmentForall);
+REGISTER_TYPED_TEST_SUITE_P(ForallRangeReduceMultipleTest,
+                            ReduceSumMultipleRangeForall,
+                            ReduceMinMultipleRangeForall);
 
-#endif  // __TEST_FORALL_SEGMENT_REDUCE_MULTIPLE_HPP__
+#endif  // __TEST_FORALL_RANGE_REDUCE_MULTIPLE_HPP__

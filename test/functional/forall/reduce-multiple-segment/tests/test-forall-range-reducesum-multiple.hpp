@@ -5,20 +5,20 @@
 // SPDX-License-Identifier: (BSD-3-Clause)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-#ifndef __TEST_FORALL_SEGMENT_REDUCESUM_MULTIPLE_HPP__
-#define __TEST_FORALL_SEGMENT_REDUCESUM_MULTIPLE_HPP__
+#ifndef __TEST_FORALL_RANGE_REDUCESUM_MULTIPLE_HPP__
+#define __TEST_FORALL_RANGE_REDUCESUM_MULTIPLE_HPP__
 
 #include "RAJA/RAJA.hpp"
 
-#include "test-forall-segment-reduce-multiple.hpp"
+#include "test-forall-range-reduce-multiple.hpp"
 
 #include <cstdlib>
 #include <numeric>
 
 template <typename DATA_TYPE, typename WORKING_RES, 
           typename EXEC_POLICY, typename REDUCE_POLICY>
-void ForallSegmentReduceSumMultipleTest(RAJA::Index_type first, 
-                                        RAJA::Index_type last)
+void ForallRangeReduceSumMultipleTest(RAJA::Index_type first, 
+                                      RAJA::Index_type last)
 {
   RAJA::TypedRangeSegment<RAJA::Index_type> r1(first, last);
 
@@ -133,15 +133,15 @@ void ForallSegmentReduceSumMultipleTest(RAJA::Index_type first,
 }
 
 
-TYPED_TEST_P(ForallSegmentReduceMultipleTest, ReduceSumMultipleSegmentForall)
+TYPED_TEST_P(ForallRangeReduceMultipleTest, ReduceSumMultipleRangeForall)
 {
   using DATA_TYPE     = typename camp::at<TypeParam, camp::num<0>>::type;
   using WORKING_RES   = typename camp::at<TypeParam, camp::num<1>>::type;
   using EXEC_POLICY   = typename camp::at<TypeParam, camp::num<2>>::type;
   using REDUCE_POLICY = typename camp::at<TypeParam, camp::num<3>>::type;
 
-  ForallSegmentReduceSumMultipleTest<DATA_TYPE, WORKING_RES, 
-                                     EXEC_POLICY, REDUCE_POLICY>(0, 3072);
+  ForallRangeReduceSumMultipleTest<DATA_TYPE, WORKING_RES, 
+                                   EXEC_POLICY, REDUCE_POLICY>(0, 2115);
 }
 
-#endif  // __TEST_FORALL_SEGMENT_REDUCESUM_MULTIPLE_HPP__
+#endif  // __TEST_FORALL_RANGE_REDUCESUM_MULTIPLE_HPP__

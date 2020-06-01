@@ -5,22 +5,22 @@
 // SPDX-License-Identifier: (BSD-3-Clause)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-#include "tests/test-forall-segment-reduce-multiple.hpp"
+#include "tests/test-forall-range-reduce-multiple.hpp"
 
-#if defined(RAJA_ENABLE_OPENMP)
+#if defined(RAJA_ENABLE_CUDA)
 
 #include "../test-forall-execpol.hpp"
 #include "../test-reducepol.hpp"
 
-// Cartesian product of types for OpenMP tests
-using OpenMPForallSegmentReduceMultipleTypes =
+// Cartesian product of types for Cuda tests
+using CudaForallRangeReduceMultipleTypes =
   Test< camp::cartesian_product<ReduceMultipleDataTypeList, 
                                 HostResourceList, 
-                                OpenMPForallExecPols,
-                                OpenMPReducePols>>::Types;
+                                CudaForallExecPols,
+                                CudaReducePols>>::Types;
 
-INSTANTIATE_TYPED_TEST_SUITE_P(OpenMP,
-                               ForallSegmentReduceMultipleTest,
-                               OpenMPForallSegmentReduceMultipleTypes);
+INSTANTIATE_TYPED_TEST_SUITE_P(Cuda,
+                               ForallRangeReduceMultipleTest,
+                               CudaForallRangeReduceMultipleTypes);
 
 #endif

@@ -5,22 +5,22 @@
 // SPDX-License-Identifier: (BSD-3-Clause)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-#include "tests/test-forall-segment-reduce-multiple.hpp"
+#include "tests/test-forall-range-reduce-multiple.hpp"
 
-#if defined(RAJA_ENABLE_CUDA)
+#if defined(RAJA_ENABLE_TBB)
 
 #include "../test-forall-execpol.hpp"
 #include "../test-reducepol.hpp"
 
-// Cartesian product of types for Cuda tests
-using CudaForallSegmentReduceMultipleTypes =
+// Cartesian product of types for TBB tests
+using TBBForallRangeReduceMultipleTypes =
   Test< camp::cartesian_product<ReduceMultipleDataTypeList, 
                                 HostResourceList, 
-                                CudaForallExecPols,
-                                CudaReducePols>>::Types;
+                                TBBForallExecPols,
+                                TBBReducePols>>::Types;
 
-INSTANTIATE_TYPED_TEST_SUITE_P(Cuda,
-                               ForallSegmentReduceMultipleTest,
-                               CudaForallSegmentReduceMultipleTypes);
+INSTANTIATE_TYPED_TEST_SUITE_P(TBB,
+                               ForallRangeReduceMultipleTest,
+                               TBBForallRangeReduceMultipleTypes);
 
 #endif

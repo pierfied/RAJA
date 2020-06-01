@@ -6,35 +6,35 @@
 ###############################################################################
 
 raja_add_test(
-  NAME test-forall-segment-reduce-multiple-seq
-  SOURCES test-forall-segment-reduce-multiple-seq.cpp)
+  NAME test-forall-range-reduce-multiple-seq
+  SOURCES test-forall-range-reduce-multiple-seq.cpp)
 
 if(RAJA_ENABLE_OPENMP)
   raja_add_test(
-    NAME test-forall-segment-reduce-multiple-openmp
-    SOURCES test-forall-segment-reduce-multiple-openmp.cpp)
+    NAME test-forall-range-reduce-multiple-openmp
+    SOURCES test-forall-range-reduce-multiple-openmp.cpp)
 endif()
 
 #if(RAJA_ENABLE_TARGET_OPENMP)
 #  raja_add_test(
-#    NAME test-forall-segment-reduce-multiple-openmp-target
-#    SOURCES test-forall-segment-reduce-multiple-openmp-target.cpp)
+#    NAME test-forall-range-reduce-multiple-openmp-target
+#    SOURCES test-forall-range-reduce-multiple-openmp-target.cpp)
 #endif()
  
 if(RAJA_ENABLE_TBB)
   raja_add_test(
-    NAME test-forall-segment-reduce-multiple-tbb
-    SOURCES test-forall-segment-reduce-multiple-tbb.cpp)
+    NAME test-forall-range-reduce-multiple-tbb
+    SOURCES test-forall-range-reduce-multiple-tbb.cpp)
 endif()
 
 if(RAJA_ENABLE_CUDA)
   raja_add_test(
-    NAME test-forall-segment-reduce-multiple-cuda
-    SOURCES test-forall-segment-reduce-multiple-cuda.cpp)
+    NAME test-forall-range-reduce-multiple-cuda
+    SOURCES test-forall-range-reduce-multiple-cuda.cpp)
 endif()
  
 #if(RAJA_ENABLE_HIP)
 #  raja_add_test(
-#    NAME test-forall-segment-reduce-multiple-hip
-#    SOURCES test-forall-segment-reduce-multiple-hip.cpp)
+#    NAME test-forall-range-reduce-multiple-hip
+#    SOURCES test-forall-range-reduce-multiple-hip.cpp)
 #endif()
