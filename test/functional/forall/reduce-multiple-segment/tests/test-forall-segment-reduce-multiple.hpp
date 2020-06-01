@@ -27,8 +27,10 @@ using ReduceMultipleDataTypeList = camp::list<int,
                                               double>;
 
 #include "test-forall-segment-reducesum-multiple.hpp"
+#include "test-forall-segment-reducemin-multiple.hpp"
 
 REGISTER_TYPED_TEST_SUITE_P(ForallSegmentReduceMultipleTest,
-                            ReduceSumMultipleSegmentForall);
+                            ReduceSumMultipleSegmentForall,
+                            ReduceMinMultipleSegmentForall);
 
 #endif  // __TEST_FORALL_SEGMENT_REDUCE_MULTIPLE_HPP__
