@@ -63,12 +63,13 @@ void ForallRangeReduceMinMultipleTest(RAJA::Index_type first,
 
     DATA_TYPE roll = static_cast<DATA_TYPE>( dist(mt) );
     RAJA::Index_type min_index = static_cast<RAJA::Index_type>(dist2(mt));
+
     if ( test_array[min_index] > roll ) {
       test_array[min_index] = roll;
       current_min = RAJA_MIN( current_min, roll );
-    }
 
-    working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+      working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+    }
 
     RAJA::forall<EXEC_POLICY>(r1, [=] RAJA_HOST_DEVICE(RAJA::Index_type idx) {
       min0.min(working_array[idx]);
@@ -91,12 +92,13 @@ void ForallRangeReduceMinMultipleTest(RAJA::Index_type first,
 
     DATA_TYPE roll = static_cast<DATA_TYPE>( dist(mt) );
     RAJA::Index_type min_index = static_cast<RAJA::Index_type>(dist2(mt));
+
     if ( test_array[min_index] > roll ) {
       test_array[min_index] = roll;
       current_min = RAJA_MIN(current_min, roll );
-    }
 
-    working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+      working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+    }
 
     RAJA::forall<EXEC_POLICY>(r1, [=] RAJA_HOST_DEVICE(RAJA::Index_type idx) {
       min0.min(working_array[idx]);

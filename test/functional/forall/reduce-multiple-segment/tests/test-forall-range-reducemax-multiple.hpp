@@ -63,12 +63,13 @@ void ForallRangeReduceMaxMultipleTest(RAJA::Index_type first,
 
     DATA_TYPE roll = static_cast<DATA_TYPE>( dist(mt) );
     RAJA::Index_type max_index = static_cast<RAJA::Index_type>(dist2(mt));
+
     if ( test_array[max_index] < roll ) {
       test_array[max_index] = roll;
       current_max = RAJA_MAX( current_max, roll );
-    }
 
-    working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+      working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+    }
 
     RAJA::forall<EXEC_POLICY>(r1, [=] RAJA_HOST_DEVICE(RAJA::Index_type idx) {
       max0.max(working_array[idx]);
@@ -91,12 +92,13 @@ void ForallRangeReduceMaxMultipleTest(RAJA::Index_type first,
 
     DATA_TYPE roll = dist(mt);
     RAJA::Index_type max_index = static_cast<RAJA::Index_type>(dist2(mt));
+
     if ( test_array[max_index] < roll ) {
       test_array[max_index] = roll;
       current_max = RAJA_MAX(current_max, roll );
-    }
 
-    working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+      working_res.memcpy(working_array, test_array, sizeof(DATA_TYPE) * last);
+    }
 
     RAJA::forall<EXEC_POLICY>(r1, [=] RAJA_HOST_DEVICE(RAJA::Index_type idx) {
       max0.max(working_array[idx]);
