@@ -80,6 +80,10 @@
 #endif
 #endif
 
+#if defined(RAJA_ENABLE_APOLLO)
+#include "RAJA/policy/apollo.hpp"
+#endif
+
 #include "RAJA/index/IndexSet.hpp"
 
 //

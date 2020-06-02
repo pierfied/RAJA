@@ -44,6 +44,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/thirdparty" ${CMAKE_MODULE_PA
 # Build options
 set(ENABLE_OPENMP On CACHE BOOL "Build OpenMP support")
 set(ENABLE_CUDA Off CACHE BOOL "Build CUDA support")
+set(ENABLE_APOLLO Off CACHE Bool "Include Apollo policy support")
 set(ENABLE_COPY_HEADERS Off CACHE BOOL "")
 set(ENABLE_WARNINGS_AS_ERRORS Off CACHE BOOL "")
 set(ENABLE_GTEST_DEATH_TESTS On CACHE BOOL "Enable tests asserting failure.")
@@ -231,6 +232,12 @@ if (ENABLE_TBB)
   set(raja_depends
     ${raja_depends}
     tbb)
+endif ()
+
+if (ENABLE_APOLLO)
+  set(raja_depends
+    ${raja_depends}
+    apollo)
 endif ()
 
 set(EXTERNAL_CAMP_SOURCE_DIR "" CACHE FILEPATH "build with a specific external
