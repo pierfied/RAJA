@@ -14,6 +14,7 @@ cmake   \
         -DENABLE_APOLLO=ON \
         -DAPOLLO_DIR=/apollo/install/path \
         -Wno-dev \
+        -DENABLE_CUDA=ON \
         ..
 #
 make -j 8 && make install && cd ..
