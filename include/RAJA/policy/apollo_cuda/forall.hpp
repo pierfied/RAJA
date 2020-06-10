@@ -214,7 +214,7 @@ RAJA_INLINE void forall_impl(apollo_cuda_exec<BlockSize, Async>,
         apolloBlockSize = blockSizeOptions[policy_index];
     }
 
-    auto gridSize = impl::getGridDim(len, BlockSize);
+    auto gridSize = impl::getGridDim(len, apolloBlockSize);
 
     RAJA_FT_BEGIN;
 
@@ -222,11 +222,11 @@ RAJA_INLINE void forall_impl(apollo_cuda_exec<BlockSize, Async>,
 
     size_t shmem = 0;
 
-    printf("gridSize (x,y) = (%d,%d), BlockSize = %d, apolloBlockSize = %d\n",
-           (int)gridSize.x,
-           (int)gridSize.y,
-           (int)BlockSize,
-           (int)apolloBlockSize);
+//    printf("gridSize (x,y) = (%d,%d), BlockSize = %d, apolloBlockSize = %d\n",
+//           (int)gridSize.x,
+//           (int)gridSize.y,
+//           (int)BlockSize,
+//           (int)apolloBlockSize);
 
     RAJA::policy::cuda::impl::forall_cuda_kernel<BlockSize><<<gridSize, apolloBlockSize, shmem, stream>>>(
         RAJA::cuda::make_launch_body(gridSize,
