@@ -66,6 +66,9 @@
 
 #if defined(RAJA_ENABLE_CUDA)
 #include "RAJA/policy/cuda.hpp"
+#if defined(RAJA_ENABLE_APOLLO)
+#include "RAJA/policy/apollo_cuda.hpp"
+#endif
 #endif
 
 #if defined(RAJA_ENABLE_HIP)
