@@ -236,7 +236,28 @@ RAJA_INLINE void forall_impl(apollo_cuda_exec<BlockSize, Async>,
                                      std::forward<LoopBody>(loop_body)),
         std::move(begin),
         len);
-    RAJA::cuda::peekAtLastError();
+
+    auto code = cudaPeekAtLastError();
+    if (code != cudaSuccess){
+      cudaGetLastError();
+
+      stream = 0;
+
+      shmem = 0;
+
+      gridSize = impl::getGridDim(len, BlockSize);
+
+      RAJA::policy::cuda::impl::forall_cuda_kernel<BlockSize><<<gridSize, BlockSize, shmem, stream>>>(
+        RAJA::cuda::make_launch_body(gridSize,
+                                     BlockSize,
+                                     shmem,
+                                     stream,
+                                     std::forward<LoopBody>(loop_body)),
+        std::move(begin),
+        len);
+
+      RAJA::cuda::peekAtLastError();
+    }
 
     RAJA::cuda::launch(stream);
     if (!Async) RAJA::cuda::synchronize(stream);
