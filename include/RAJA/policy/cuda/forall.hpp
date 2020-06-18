@@ -181,15 +181,15 @@ RAJA_INLINE void forall_impl(cuda_exec<BlockSize, Async>,
 #if defined(RAJA_ENABLE_APOLLO)
   static Apollo         *apollo             = Apollo::instance();
   static Apollo::Region *apolloRegion       = nullptr;
-  static int             blockSizeOptions[] = {0,   /* default to BlockSize */
-                                                 32, 64, 128, 192, 256,
-                                                 320, 384, 448, 512, 576,
-                                                 640, 704, 768, 832, 896,
-                                                 960, 1024, 2048, 4096    };
+  static int numBlockSizeOptions = BlockSize / 32;
+  int blockSizeOptions[numBlockSizeOptions];
+  for(int i = 0; i < numBlockSizeOptions; i++){
+     blockSizeOptions[i] = 32 * (i+1);
+  }
 
   if (apolloRegion == nullptr) {
     std::string code_location = apollo->getCallpathOffset();
-    apolloRegion = new Apollo::Region(1, code_location.c_str(), 20);
+    apolloRegion = new Apollo::Region(1, code_location.c_str(), numBlockSizeOptions);
   }
 
   int policy_index     = 0;
@@ -205,11 +205,7 @@ RAJA_INLINE void forall_impl(cuda_exec<BlockSize, Async>,
     apolloRegion->setFeature((float)num_elements);
 
     policy_index = apolloRegion->getPolicyIndex();
-    if (policy_index == 0) {
-        apolloBlockSize = BlockSize;
-    } else {
-        apolloBlockSize = blockSizeOptions[policy_index];
-    }
+    apolloBlockSize = blockSizeOptions[policy_index];
 
     cuda_dim_t blockSize{apolloBlockSize, 1, 1};
 #else
