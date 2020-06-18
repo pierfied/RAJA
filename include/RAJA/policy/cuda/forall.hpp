@@ -41,6 +41,11 @@
 
 #include "RAJA/index/IndexSet.hpp"
 
+#if defined(RAJA_ENABLE_APOLLO)
+#include "apollo/Apollo.h"
+#include "apollo/Region.h"
+#endif
+
 namespace RAJA
 {
 
@@ -173,13 +178,47 @@ RAJA_INLINE void forall_impl(cuda_exec<BlockSize, Async>,
   Iterator end = std::end(iter);
   IndexType len = std::distance(begin, end);
 
+#if defined(RAJA_ENABLE_APOLLO)
+  static Apollo         *apollo             = Apollo::instance();
+  static Apollo::Region *apolloRegion       = nullptr;
+  static int             blockSizeOptions[] = {0,   /* default to BlockSize */
+                                                 32, 64, 128, 192, 256,
+                                                 320, 384, 448, 512, 576,
+                                                 640, 704, 768, 832, 896,
+                                                 960, 1024, 2048, 4096    };
+
+  if (apolloRegion == nullptr) {
+    std::string code_location = apollo->getCallpathOffset();
+    apolloRegion = new Apollo::Region(1, code_location.c_str(), 20);
+  }
+
+  int policy_index     = 0;
+  int num_elements     = len;
+  int apolloBlockSize  = BlockSize;
+#endif
+
   // Only launch kernel if we have something to iterate over
   if (len > 0 && BlockSize > 0) {
+#if defined(RAJA_ENABLE_APOLLO)
+    apolloRegion->begin();
+
+    apolloRegion->setFeature((float)num_elements);
+
+    policy_index = apolloRegion->getPolicyIndex();
+    if (policy_index == 0) {
+        apolloBlockSize = BlockSize;
+    } else {
+        apolloBlockSize = blockSizeOptions[policy_index];
+    }
+
+    cuda_dim_t blockSize{apolloBlockSize, 1, 1};
+#else
+    cuda_dim_t blockSize{BlockSize, 1, 1};
+#endif
 
     //
     // Compute the number of blocks
     //
-    cuda_dim_t blockSize{BlockSize, 1, 1};
     cuda_dim_t gridSize = impl::getGridDim(static_cast<cuda_dim_member_t>(len), blockSize);
 
     RAJA_FT_BEGIN;
@@ -214,6 +253,10 @@ RAJA_INLINE void forall_impl(cuda_exec<BlockSize, Async>,
     if (!Async) { RAJA::cuda::synchronize(stream); }
 
     RAJA_FT_END;
+
+#if defined(RAJA_ENABLE_APOLLO)
+    apolloRegion->end();
+#endif
   }
 }
 
